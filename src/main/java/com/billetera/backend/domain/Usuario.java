@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import jakarta.validation.constraints.Pattern;
 import java.time.LocalDate;
-
+import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
@@ -51,4 +51,8 @@ public class Usuario {
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
     @JsonManagedReference
     private Cuenta cuenta;
+    
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+@JsonManagedReference
+private List<Factura> facturas;
 }

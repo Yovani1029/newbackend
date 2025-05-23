@@ -33,4 +33,12 @@ public class UsuarioController {
     public BigDecimal saldo(@PathVariable Long id) {
         return usuarioService.consultarSaldo(id);
     }
+     @PutMapping("/{id}")
+    public Usuario actualizarUsuario(@PathVariable Long id, @RequestBody Usuario usuarioActualizado) {
+        return usuarioService.actualizarUsuario(id, usuarioActualizado);
+}
+    @DeleteMapping("/{id}")
+    public void eliminarUsuario(@PathVariable Long id) {
+    usuarioService.eliminarUsuario(id);
+}
 }

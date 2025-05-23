@@ -73,5 +73,29 @@ public class UsuarioServiceImpl implements UsuarioService {
         }
         return null;
     }
+    @Override
+    public Usuario actualizarUsuario(Long id, Usuario usuarioActualizado) {
+         Usuario usuarioExistente = usuarioRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+
+        usuarioExistente.setNombre(usuarioActualizado.getNombre());
+        usuarioExistente.setApellido(usuarioActualizado.getApellido());
+        usuarioExistente.setCorreo(usuarioActualizado.getCorreo());
+        usuarioExistente.setTelefono(usuarioActualizado.getTelefono());
+        usuarioExistente.setFechaNacimiento(usuarioActualizado.getFechaNacimiento());
+        usuarioExistente.setTipoIdentificacion(usuarioActualizado.getTipoIdentificacion());
+        usuarioExistente.setNumeroIdentificacion(usuarioActualizado.getNumeroIdentificacion());
+        usuarioExistente.setContrasena(usuarioActualizado.getContrasena());
+
+    return usuarioRepository.save(usuarioExistente);
+}
+    @Override
+    public void eliminarUsuario(Long id) {
+        Usuario usuario = usuarioRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+
+        cuentaRepository.deleteById(usuario.getCuenta().getId());
+        usuarioRepository.deleteById(id);
+}
 
 }

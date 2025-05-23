@@ -11,4 +11,8 @@ public interface UsuarioService {
     Usuario login(String telefono, String contrasena);
 
     BigDecimal consultarSaldo(Long usuarioId);
+    Usuario actualizarUsuario(Long id, Usuario usuarioActualizado);
+
+    void eliminarUsuario(Long id);
+
 }
