@@ -1,9 +1,9 @@
-package com.billetera.backend.application;
+package com.billetera.backend.application.Services;
 
-import com.billetera.backend.domain.Cuenta;
-import com.billetera.backend.domain.Transaccion;
-import com.billetera.backend.infrastructure.CuentaRepository;
-import com.billetera.backend.infrastructure.TransaccionRepository;
+import com.billetera.backend.domain.Entity.Cuenta;
+import com.billetera.backend.domain.Entity.Transaccion;
+import com.billetera.backend.infrastructure.Repository.CuentaRepository;
+import com.billetera.backend.infrastructure.Repository.TransaccionRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

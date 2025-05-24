@@ -1,7 +1,8 @@
-package com.billetera.backend.application;
+package com.billetera.backend.application.Services;
 
-import com.billetera.backend.domain.Cuenta;
-import com.billetera.backend.infrastructure.CuentaRepository;
+import com.billetera.backend.domain.Entity.Cuenta;
+import com.billetera.backend.infrastructure.Repository.CuentaRepository;
+
 import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;

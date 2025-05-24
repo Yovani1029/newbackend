@@ -1,8 +1,9 @@
-package com.billetera.backend.infrastructure;
+package com.billetera.backend.infrastructure.Repository;
 
-import com.billetera.backend.domain.Cuenta;
-import com.billetera.backend.domain.Transaccion;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.billetera.backend.domain.Entity.Cuenta;
+import com.billetera.backend.domain.Entity.Transaccion;
 
 import java.util.List;
 

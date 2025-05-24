@@ -1,7 +1,8 @@
-package com.billetera.backend.application;
+package com.billetera.backend.application.Services;
 
 import java.util.List;
-import com.billetera.backend.domain.Factura;
+
+import com.billetera.backend.domain.Entity.Factura;
 
 public interface FacturaService {
     Factura crearFactura(Factura factura, Long usuarioId);

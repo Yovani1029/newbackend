@@ -1,7 +1,8 @@
-package com.billetera.backend.infrastructure;
+package com.billetera.backend.infrastructure.Controller;
 
-import com.billetera.backend.domain.Usuario;
-import com.billetera.backend.application.UsuarioService;
+import com.billetera.backend.application.Services.UsuarioService;
+import com.billetera.backend.domain.Entity.Usuario;
+
 import jakarta.validation.Valid;
 
 import java.math.BigDecimal;

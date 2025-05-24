@@ -1,7 +1,7 @@
-package com.billetera.backend.infrastructure;
+package com.billetera.backend.infrastructure.Controller;
 
-import com.billetera.backend.domain.Transaccion;
-import com.billetera.backend.application.TransaccionService;
+import com.billetera.backend.application.Services.TransaccionService;
+import com.billetera.backend.domain.Entity.Transaccion;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

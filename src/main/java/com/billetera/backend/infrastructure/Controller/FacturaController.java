@@ -1,7 +1,8 @@
-package com.billetera.backend.infrastructure;
+package com.billetera.backend.infrastructure.Controller;
 
-import com.billetera.backend.application.FacturaService;
-import com.billetera.backend.domain.Factura;
+import com.billetera.backend.application.Services.FacturaService;
+import com.billetera.backend.domain.Entity.Factura;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

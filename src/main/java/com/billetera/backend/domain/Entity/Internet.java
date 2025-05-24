@@ -1,4 +1,4 @@
-package com.billetera.backend.domain;
+package com.billetera.backend.domain.Entity;
 
 import jakarta.persistence.*;
 import lombok.*;

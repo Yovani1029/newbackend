@@ -1,4 +1,4 @@
-package com.billetera.backend.domain;
+package com.billetera.backend.domain.Entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;

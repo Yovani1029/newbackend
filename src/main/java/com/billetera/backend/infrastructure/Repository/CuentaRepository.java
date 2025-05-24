@@ -1,9 +1,10 @@
-package com.billetera.backend.infrastructure;
+package com.billetera.backend.infrastructure.Repository;
 
-import com.billetera.backend.domain.Cuenta;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+
+import com.billetera.backend.domain.Entity.Cuenta;
 
 import java.util.Optional;
 

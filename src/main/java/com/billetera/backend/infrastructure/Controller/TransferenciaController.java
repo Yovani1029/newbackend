@@ -1,6 +1,6 @@
-package com.billetera.backend.infrastructure;
+package com.billetera.backend.infrastructure.Controller;
 
-import com.billetera.backend.application.TransferenciaService;
+import com.billetera.backend.application.Services.TransferenciaService;
 import com.billetera.backend.infrastructure.dto.TransferenciaRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

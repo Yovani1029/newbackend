@@ -1,8 +1,8 @@
-package com.billetera.backend.application;
+package com.billetera.backend.application.Services;
 
 import java.math.BigDecimal;
 
-import com.billetera.backend.domain.Usuario;
+import com.billetera.backend.domain.Entity.Usuario;
 
 public interface UsuarioService {
 

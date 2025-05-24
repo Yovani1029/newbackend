@@ -1,9 +1,9 @@
-package com.billetera.backend.application;
+package com.billetera.backend.application.Services;
 
-import com.billetera.backend.domain.Usuario;
-import com.billetera.backend.domain.Cuenta;
-import com.billetera.backend.infrastructure.UsuarioRepository;
-import com.billetera.backend.infrastructure.CuentaRepository;
+import com.billetera.backend.domain.Entity.Cuenta;
+import com.billetera.backend.domain.Entity.Usuario;
+import com.billetera.backend.infrastructure.Repository.CuentaRepository;
+import com.billetera.backend.infrastructure.Repository.UsuarioRepository;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

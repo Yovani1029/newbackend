@@ -1,7 +1,8 @@
-package com.billetera.backend.infrastructure;
+package com.billetera.backend.infrastructure.Controller;
 
-import com.billetera.backend.application.CuentaService;
-import com.billetera.backend.domain.Cuenta;
+import com.billetera.backend.application.Services.CuentaService;
+import com.billetera.backend.domain.Entity.Cuenta;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

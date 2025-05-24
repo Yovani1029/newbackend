@@ -1,15 +1,15 @@
-package com.billetera.backend.application;
+package com.billetera.backend.application.Services;
 
-import com.billetera.backend.domain.Factura;
-import com.billetera.backend.domain.Usuario;
-import com.billetera.backend.domain.Luz;
-import com.billetera.backend.domain.Agua;
-import com.billetera.backend.domain.Internet;
-import com.billetera.backend.infrastructure.FacturaRepository;
-import com.billetera.backend.infrastructure.UsuarioRepository;
-import com.billetera.backend.infrastructure.LuzRepository;
-import com.billetera.backend.infrastructure.AguaRepository;
-import com.billetera.backend.infrastructure.InternetRepository;
+import com.billetera.backend.domain.Entity.Agua;
+import com.billetera.backend.domain.Entity.Factura;
+import com.billetera.backend.domain.Entity.Internet;
+import com.billetera.backend.domain.Entity.Luz;
+import com.billetera.backend.domain.Entity.Usuario;
+import com.billetera.backend.infrastructure.Repository.AguaRepository;
+import com.billetera.backend.infrastructure.Repository.FacturaRepository;
+import com.billetera.backend.infrastructure.Repository.InternetRepository;
+import com.billetera.backend.infrastructure.Repository.LuzRepository;
+import com.billetera.backend.infrastructure.Repository.UsuarioRepository;
 
 import org.springframework.stereotype.Service;
 
