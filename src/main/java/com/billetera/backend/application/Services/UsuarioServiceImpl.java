@@ -58,11 +58,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Usuario login(String telefono, String contrasena) {
-        Usuario usuario = usuarioRepository.findByTelefono(telefono);
-        if (usuario != null && usuario.getContrasena().equals(contrasena)) {
-            return usuario;
-        }
-        return null;
+        return usuarioRepository.findByTelefono(telefono)
+            .filter(usuario -> usuario.getContrasena().equals(contrasena))
+            .orElseThrow(() -> new IllegalArgumentException("Credenciales inválidas"));
     }
 
     @Override
@@ -73,10 +71,11 @@ public class UsuarioServiceImpl implements UsuarioService {
         }
         return null;
     }
+
     @Override
     public Usuario actualizarUsuario(Long id, Usuario usuarioActualizado) {
-         Usuario usuarioExistente = usuarioRepository.findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+        Usuario usuarioExistente = usuarioRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
 
         usuarioExistente.setNombre(usuarioActualizado.getNombre());
         usuarioExistente.setApellido(usuarioActualizado.getApellido());
@@ -87,15 +86,16 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuarioExistente.setNumeroIdentificacion(usuarioActualizado.getNumeroIdentificacion());
         usuarioExistente.setContrasena(usuarioActualizado.getContrasena());
 
-    return usuarioRepository.save(usuarioExistente);
-}
+        return usuarioRepository.save(usuarioExistente);
+    }
+
     @Override
     public void eliminarUsuario(Long id) {
         Usuario usuario = usuarioRepository.findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
 
         cuentaRepository.deleteById(usuario.getCuenta().getId());
         usuarioRepository.deleteById(id);
-}
+    }
 
 }

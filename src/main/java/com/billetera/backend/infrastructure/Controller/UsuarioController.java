@@ -7,6 +7,8 @@ import jakarta.validation.Valid;
 
 import java.math.BigDecimal;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -26,20 +28,30 @@ public class UsuarioController {
     }
 
     @PostMapping("/login")
-    public Usuario login(@RequestBody Usuario usuario) {
-        return usuarioService.login(usuario.getTelefono(), usuario.getContrasena());
+    public ResponseEntity<?> login(@RequestBody Usuario usuario) {
+        try {
+            Usuario usuarioAutenticado = usuarioService.login(
+                    usuario.getTelefono(),
+                    usuario.getContrasena());
+            return ResponseEntity.ok(usuarioAutenticado);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(e.getMessage());
+        }
     }
 
     @GetMapping("/{id}/saldo")
     public BigDecimal saldo(@PathVariable Long id) {
         return usuarioService.consultarSaldo(id);
     }
-     @PutMapping("/{id}")
+
+    @PutMapping("/{id}")
     public Usuario actualizarUsuario(@PathVariable Long id, @RequestBody Usuario usuarioActualizado) {
         return usuarioService.actualizarUsuario(id, usuarioActualizado);
-}
+    }
+
     @DeleteMapping("/{id}")
     public void eliminarUsuario(@PathVariable Long id) {
-    usuarioService.eliminarUsuario(id);
-}
+        usuarioService.eliminarUsuario(id);
+    }
 }
