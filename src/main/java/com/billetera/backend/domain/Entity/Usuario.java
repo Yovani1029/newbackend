@@ -55,4 +55,12 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
 @JsonManagedReference
 private List<Factura> facturas;
+
+ public String getEmail() {
+        return this.correo;
+    }
+    
+    public void setEmail(String email) {
+        this.correo = email;
+    }
 }

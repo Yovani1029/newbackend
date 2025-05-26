@@ -45,6 +45,6 @@ public class CuentaService {
     }
 
     public void actualizarSaldo(Cuenta cuenta) {
-        cuentaRepository.save(cuenta);
+        cuentaRepository.saveAndFlush(cuenta);
     }
 }

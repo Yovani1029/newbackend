@@ -42,7 +42,6 @@ public class DepositoService {
         cuenta.setSaldo(saldoAnterior.add(monto));
         cuentaRepository.save(cuenta);
 
-        // Registrar transacción
         Transaccion transaccion = new Transaccion();
         transaccion.setCuenta(cuenta);
         transaccion.setMonto(monto);

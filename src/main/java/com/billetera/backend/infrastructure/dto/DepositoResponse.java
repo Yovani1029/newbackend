@@ -9,7 +9,6 @@ public class DepositoResponse {
     private BigDecimal monto;
     private BigDecimal nuevoSaldo;
 
-    // Constructores
     public DepositoResponse() {}
 
     public DepositoResponse(boolean success, String message) {
@@ -27,7 +26,6 @@ public class DepositoResponse {
         this.nuevoSaldo = nuevoSaldo;
     }
 
-    // Getters y Setters
     public boolean isSuccess() {
         return success;
     }
