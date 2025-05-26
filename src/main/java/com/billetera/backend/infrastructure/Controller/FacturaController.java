@@ -38,14 +38,14 @@ public class FacturaController {
         return facturaService.obtenerFacturasPendientes();
     }
 
-    // ✅ NUEVO ENDPOINT PARA PAGAR FACTURA
-   // @PutMapping("/{id}/pagar")
- //   public Factura pagarFactura(@PathVariable Long id) {
-   //     return facturaService.pagarFactura(id);
-  //  }
-
     @GetMapping("/usuario/{usuarioId}")
     public List<Factura> obtenerFacturas(@PathVariable Long usuarioId) {
         return facturaService.obtenerFacturasDeUsuario(usuarioId);
     }
+
+    @PutMapping("/{id}/pagar")
+    public Factura pagarFactura(@PathVariable Long id) {
+        return facturaService.pagarFactura(id);
+    }
+
 }

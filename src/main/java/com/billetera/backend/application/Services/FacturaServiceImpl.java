@@ -1,40 +1,53 @@
 package com.billetera.backend.application.Services;
 
 import com.billetera.backend.domain.Entity.Agua;
+import com.billetera.backend.domain.Entity.Cuenta;
 import com.billetera.backend.domain.Entity.Factura;
 import com.billetera.backend.domain.Entity.Internet;
 import com.billetera.backend.domain.Entity.Luz;
+import com.billetera.backend.domain.Entity.Transaccion;
 import com.billetera.backend.domain.Entity.Usuario;
 import com.billetera.backend.infrastructure.Repository.AguaRepository;
+import com.billetera.backend.infrastructure.Repository.CuentaRepository;
 import com.billetera.backend.infrastructure.Repository.FacturaRepository;
 import com.billetera.backend.infrastructure.Repository.InternetRepository;
 import com.billetera.backend.infrastructure.Repository.LuzRepository;
+import com.billetera.backend.infrastructure.Repository.TransaccionRepository;
 import com.billetera.backend.infrastructure.Repository.UsuarioRepository;
+
+import jakarta.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
 @Service
 public class FacturaServiceImpl implements FacturaService {
-
+    private final CuentaRepository cuentaRepository;
+    private final TransaccionRepository transaccionRepository;
     private final FacturaRepository facturaRepository;
     private final UsuarioRepository usuarioRepository;
     private final LuzRepository luzRepository;
     private final AguaRepository aguaRepository;
     private final InternetRepository internetRepository;
 
-    public FacturaServiceImpl(FacturaRepository facturaRepository,
-                              UsuarioRepository usuarioRepository,
-                              LuzRepository luzRepository,
-                              AguaRepository aguaRepository,
-                              InternetRepository internetRepository) {
+    public FacturaServiceImpl(
+            FacturaRepository facturaRepository,
+            UsuarioRepository usuarioRepository,
+            LuzRepository luzRepository,
+            AguaRepository aguaRepository,
+            InternetRepository internetRepository,
+            CuentaRepository cuentaRepository,
+            TransaccionRepository transaccionRepository) {
         this.facturaRepository = facturaRepository;
         this.usuarioRepository = usuarioRepository;
         this.luzRepository = luzRepository;
         this.aguaRepository = aguaRepository;
         this.internetRepository = internetRepository;
+        this.cuentaRepository = cuentaRepository;
+        this.transaccionRepository = transaccionRepository;
     }
 
     @Override
@@ -122,4 +135,40 @@ public class FacturaServiceImpl implements FacturaService {
     public List<Factura> obtenerFacturasPendientes() {
         return facturaRepository.findByEstado("pendiente");
     }
+
+    @Transactional
+    public Factura pagarFactura(Long facturaId) {
+        Factura factura = facturaRepository.findById(facturaId)
+                .orElseThrow(() -> new RuntimeException("Factura no encontrada"));
+
+        if (!"pendiente".equalsIgnoreCase(factura.getEstado())) {
+            throw new RuntimeException("La factura ya fue pagada o no está pendiente");
+        }
+
+        Usuario usuario = factura.getUsuario();
+        Cuenta cuenta = usuario.getCuenta();
+
+        if (cuenta.getSaldo().compareTo(BigDecimal.valueOf(factura.getMonto())) < 0) {
+            throw new RuntimeException("Saldo insuficiente para pagar la factura");
+        }
+
+        BigDecimal nuevoSaldo = cuenta.getSaldo().subtract(BigDecimal.valueOf(factura.getMonto()));
+        cuenta.setSaldo(nuevoSaldo);
+
+        factura.setEstado("pagada");
+
+        Transaccion transaccion = new Transaccion();
+        transaccion.setCuenta(cuenta);
+        transaccion.setMonto(BigDecimal.valueOf(factura.getMonto()));
+        transaccion.setTipoTransaccion("PAGO");
+        transaccion.setDescripcion("Pago de factura de " + factura.getServicio());
+        transaccion.setEstado("COMPLETADO");
+
+        cuentaRepository.save(cuenta);
+        facturaRepository.save(factura);
+        transaccionRepository.save(transaccion);
+
+        return factura;
+    }
+
 }
