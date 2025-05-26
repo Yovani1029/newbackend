@@ -3,7 +3,9 @@ package com.billetera.backend.application.Services;
 import com.billetera.backend.domain.Entity.Cuenta;
 import com.billetera.backend.domain.Entity.Usuario;
 import com.billetera.backend.infrastructure.Repository.CuentaRepository;
+import com.billetera.backend.infrastructure.Repository.TransaccionRepository;
 import com.billetera.backend.infrastructure.Repository.UsuarioRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -15,11 +17,12 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
     private final CuentaRepository cuentaRepository;
-
+ private final TransaccionRepository transaccionRepository; 
     @Autowired
-    public UsuarioServiceImpl(UsuarioRepository usuarioRepository, CuentaRepository cuentaRepository) {
+    public UsuarioServiceImpl(UsuarioRepository usuarioRepository, CuentaRepository cuentaRepository, TransaccionRepository transaccionRepository) {
         this.usuarioRepository = usuarioRepository;
         this.cuentaRepository = cuentaRepository;
+        this.transaccionRepository = transaccionRepository;
     }
 
     @Override
@@ -73,29 +76,42 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public Usuario actualizarUsuario(Long id, Usuario usuarioActualizado) {
-        Usuario usuarioExistente = usuarioRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+public Usuario actualizarUsuario(Long id, Usuario usuarioActualizado) {
+    Usuario usuarioExistente = usuarioRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
 
-        usuarioExistente.setNombre(usuarioActualizado.getNombre());
-        usuarioExistente.setApellido(usuarioActualizado.getApellido());
-        usuarioExistente.setCorreo(usuarioActualizado.getCorreo());
-        usuarioExistente.setTelefono(usuarioActualizado.getTelefono());
-        usuarioExistente.setFechaNacimiento(usuarioActualizado.getFechaNacimiento());
-        usuarioExistente.setTipoIdentificacion(usuarioActualizado.getTipoIdentificacion());
-        usuarioExistente.setNumeroIdentificacion(usuarioActualizado.getNumeroIdentificacion());
+    usuarioExistente.setNombre(usuarioActualizado.getNombre());
+    usuarioExistente.setApellido(usuarioActualizado.getApellido());
+    usuarioExistente.setCorreo(usuarioActualizado.getCorreo());
+    usuarioExistente.setTelefono(usuarioActualizado.getTelefono());
+
+    // Solo actualiza contraseña si no es nula ni vacía
+    if (usuarioActualizado.getContrasena() != null && !usuarioActualizado.getContrasena().isBlank()) {
         usuarioExistente.setContrasena(usuarioActualizado.getContrasena());
-
-        return usuarioRepository.save(usuarioExistente);
     }
 
-    @Override
-    public void eliminarUsuario(Long id) {
-        Usuario usuario = usuarioRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+    return usuarioRepository.save(usuarioExistente);
+}
 
-        cuentaRepository.deleteById(usuario.getCuenta().getId());
-        usuarioRepository.deleteById(id);
+
+        @Override
+@Transactional
+public void eliminarUsuario(Long id) {
+    Usuario usuario = usuarioRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+
+    Long cuentaId = usuario.getCuenta() != null ? usuario.getCuenta().getId() : null;
+
+    if (cuentaId != null) {
+        // Eliminar transacciones u otras entidades relacionadas si es necesario
+        transaccionRepository.deleteByCuentaId(cuentaId); 
+
+        cuentaRepository.deleteById(cuentaId);
     }
+
+    usuarioRepository.deleteById(id);
+}
+
+    
 
 }

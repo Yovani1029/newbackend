@@ -50,8 +50,10 @@ public class UsuarioController {
         return usuarioService.actualizarUsuario(id, usuarioActualizado);
     }
 
-    @DeleteMapping("/{id}")
-    public void eliminarUsuario(@PathVariable Long id) {
+     @DeleteMapping("/{id}")
+    public ResponseEntity<?> eliminarUsuario(@PathVariable Long id) {
         usuarioService.eliminarUsuario(id);
+        return ResponseEntity.ok("Usuario eliminado correctamente");
     }
+
 }
