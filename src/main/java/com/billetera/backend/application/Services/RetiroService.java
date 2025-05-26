@@ -80,7 +80,7 @@ public class RetiroService {
         transaccion.setCuenta(cuenta);
         transaccion.setMonto(monto);
         transaccion.setTipoTransaccion("RETIRO");
-        transaccion.setDescripcion("Retiro con verificación por correo");
+        transaccion.setDescripcion("Retiro");
         transaccion.setEstado("COMPLETADO");
         transaccionRepository.save(transaccion);
 

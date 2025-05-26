@@ -9,6 +9,5 @@ import java.util.List;
 public interface TransaccionRepository extends JpaRepository<Transaccion, Long> {
     List<Transaccion> findByCuentaOrderByFechaTransaccionDesc(Cuenta cuenta);
 
-    // ✅ Método para borrar todas las transacciones de una cuenta por ID
     void deleteByCuentaId(Long cuentaId);
 }
