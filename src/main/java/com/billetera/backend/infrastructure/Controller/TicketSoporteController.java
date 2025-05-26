@@ -7,6 +7,9 @@ import com.billetera.backend.infrastructure.dto.TicketRequest;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,4 +25,11 @@ public class TicketSoporteController {
             @Valid @RequestBody TicketRequest request) {
         return ResponseEntity.ok(service.crearTicket(request));
     }
+
+    @GetMapping("/usuario/{usuarioId}")
+public ResponseEntity<List<TicketSoporte>> obtenerTicketsPorUsuario(@PathVariable Long usuarioId) {
+    List<TicketSoporte> tickets = service.obtenerTicketsPorUsuario(usuarioId);
+    return ResponseEntity.ok(tickets);
+}
+
 }

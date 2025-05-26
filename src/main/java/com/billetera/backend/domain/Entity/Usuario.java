@@ -1,11 +1,15 @@
 package com.billetera.backend.domain.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import jakarta.validation.constraints.Pattern;
 import java.time.LocalDate;
 import java.util.List;
+
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -35,7 +39,7 @@ public class Usuario {
     private String numeroIdentificacion;
 
     @Column(nullable = false, length = 10)
-    @Pattern (regexp = "\\d{10}", message = "El teléfono debe tener exactamente 10 dígitos numéricos")
+    @Pattern(regexp = "\\d{10}", message = "El teléfono debe tener exactamente 10 dígitos numéricos")
     private String telefono;
 
     @Column(nullable = false, length = 100)
@@ -51,15 +55,16 @@ public class Usuario {
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
     @JsonManagedReference
     private Cuenta cuenta;
-    
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
-@JsonManagedReference
-private List<Factura> facturas;
 
- public String getEmail() {
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Factura> facturas;
+
+
+    public String getEmail() {
         return this.correo;
     }
-    
+
     public void setEmail(String email) {
         this.correo = email;
     }

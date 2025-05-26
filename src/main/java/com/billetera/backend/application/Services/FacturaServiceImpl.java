@@ -64,10 +64,8 @@ public class FacturaServiceImpl implements FacturaService {
 
         factura.setUsuario(usuario);
 
-        // Guardamos la factura principal
         factura = facturaRepository.save(factura);
 
-        // Guardamos la entidad específica
         switch (factura.getServicio().toLowerCase()) {
             case "luz" -> {
                 Luz luz = new Luz();

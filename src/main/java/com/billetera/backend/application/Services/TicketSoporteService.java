@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Locale;
 
 import org.springframework.mail.MailException;
@@ -28,6 +29,7 @@ public class TicketSoporteService {
     private final TicketSoporteRepository ticketRepo;
     private final UsuarioRepository usuarioRepo;
     private final JavaMailSender mailSender;
+
 
     @Transactional
     public TicketSoporte crearTicket(TicketRequest request) {
@@ -140,4 +142,11 @@ public class TicketSoporteService {
         }
     }
 
+
+    @Transactional(readOnly = true)
+    public List<TicketSoporte> obtenerTicketsPorUsuario(Long usuarioId) {
+        return ticketRepo.findByUsuarioId(usuarioId);
+    }
+
 }
+
